@@ -983,6 +983,11 @@ CUPnPServer::ServeFile(const NPT_HttpRequest&              request,
         return NPT_SUCCESS;
     }
 
+    if (file_path.Left(13).Compare("image://video", true) == 0 || file_path.Left(13).Compare("image://music", true) == 0) {
+        response.SetStatus(404, "File Not Found");
+        return NPT_SUCCESS;
+    }
+
     if(URIUtils::IsURL((const char*)file_path))
     {
       CStdString disp = "inline; filename=\"" + URIUtils::GetFileName((const char*)file_path) + "\"";
